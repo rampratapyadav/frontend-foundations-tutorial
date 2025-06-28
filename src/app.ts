@@ -5,11 +5,14 @@ import { projects, Project } from './projects.js';
 // DOM Elements
 const themeSwitcher = document.getElementById('theme-switcher') as HTMLButtonElement;
 const projectsContainer = document.getElementById('projects-container') as HTMLDivElement;
+const themeStatus = document.getElementById('theme-status') as HTMLSpanElement;
 
 // --- Theme Switcher ---
 document.addEventListener('DOMContentLoaded', () => {
     const currentTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', currentTheme);
+    // Set initial aria-label based on current theme
+    themeSwitcher.setAttribute('aria-label', `Toggle ${currentTheme === 'light' ? 'dark' : 'light'} mode`);
 });
 
 themeSwitcher.addEventListener('click', () => {
@@ -17,6 +20,12 @@ themeSwitcher.addEventListener('click', () => {
     let newTheme = currentTheme === 'light' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
+
+    // Update aria-label for the next toggle
+    themeSwitcher.setAttribute('aria-label', `Toggle ${newTheme === 'light' ? 'dark' : 'light'} mode`);
+
+    // Announce theme change for screen readers
+    themeStatus.textContent = `Theme changed to ${newTheme} mode.`;
 });
 
 // --- Load Projects ---
