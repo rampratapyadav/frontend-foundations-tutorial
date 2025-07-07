@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video 7 Slides: AI in Your Workflow</title>
+    <link rel="stylesheet" href="slides.css">
+</head>
+<body>
+    <div id="presentation">
+        <section class="slide active">
+            <h1>Integrating AI into Your Workflow</h1>
+            <p>Your New Co-pilot</p>
+        </section>
+
+        <section class="slide">
+            <h2>Today's Agenda: 5 Use Cases</h2>
+            <ol style="list-style-type: decimal; padding-left: 40px; font-size: 1.4rem; text-align: left;">
+                <li style="margin-bottom: 15px;">Generating Boilerplate</li>
+                <li style="margin-bottom: 15px;">Writing Unit Tests</li>
+                <li style="margin-bottom: 15px;">Refactoring Code</li>
+                <li style="margin-bottom: 15px;">Debugging</li>
+                <li style="margin-bottom: 15px;">Explaining Complex Code</li>
+            </ol>
+        </section>
+
+        <section class="slide">
+            <h2>1. Generating Boilerplate</h2>
+            <p>Save time on standard configuration files.</p>
+            <pre><code>
+# Prompt Example:
+"Generate a boilerplate `package.json` file for a new TypeScript project. 
+Include scripts for `build` (running `tsc`) and `start` (running a local server)."
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>2. Writing Unit Tests</h2>
+            <p>Improve code robustness by letting AI identify edge cases.</p>
+            <pre><code>
+# Prompt Example:
+"Here is my TypeScript function. Write a set of Jest unit tests for it. 
+Cover these cases: standard input, empty array, and null input."
+
+// (Provide your function code here)
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>3. Refactoring Code</h2>
+            <p>Modernize and clean up your code with AI assistance.</p>
+            <pre><code>
+# Prompt Example:
+"Refactor the following JavaScript code to use modern `async/await` syntax 
+with a `try...catch` block for error handling."
+
+// (Provide your messy code here)
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>4. Debugging</h2>
+            <p>Get help understanding and fixing cryptic errors.</p>
+            <pre><code>
+# Prompt Example:
+"I'm getting this error: `TypeError: Cannot read properties of undefined`. 
+Here is the code that's causing it. Can you explain the likely cause and suggest a fix?"
+
+// (Provide the problematic code block)
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>5. Explaining Complex Code</h2>
+            <p>Understand complex algorithms or syntax quickly.</p>
+            <pre><code>
+# Prompt Example:
+"Explain what this regular expression does: 
+/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/"
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>Key Takeaway</h2>
+            <p class="takeaway">AI is a tool to augment your skills, not replace them. Use it to automate the tedious parts of your job.</p>
+        </section>
+
+        <section class="slide">
+            <h2>Next Up...</h2>
+            <h1>Prompt Engineering for Code</h1>
+        </section>
+    </div>
+
+    <div class="controls">
+        <button id="prev">&larr; Prev</button>
+        <span id="slide-counter">1 / 9</span>
+        <button id="next">Next &rarr;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextButton = document.getElementById('next');
+            const prevButton = document.getElementById('prev');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+                slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+                prevButton.disabled = currentSlide === 0;
+                nextButton.disabled = currentSlide === slides.length - 1;
+            }
+
+            function showNextSlide() {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            }
+
+            function showPrevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+
+            nextButton.addEventListener('click', showNextSlide);
+            prevButton.addEventListener('click', showPrevSlide);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    showNextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevSlide();
+                }
+            });
+
+            updateSlides();
+        });
+    </script>
+</body>
+</html>

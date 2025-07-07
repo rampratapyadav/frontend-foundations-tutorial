@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video 4 Slides: Accessibility (A11y)</title>
+    <link rel="stylesheet" href="slides.css">
+</head>
+<body>
+    <div id="presentation">
+        <section class="slide active">
+            <h1>Accessibility (A11y) Fundamentals</h1>
+            <p>Building for Everyone</p>
+        </section>
+
+        <section class="slide">
+            <h2>The POUR Principles</h2>
+            <p>The foundation of web accessibility (WCAG).</p>
+            <ul>
+                <li><strong>P</strong>erceivable: Information must be presentable to users in ways they can perceive.</li>
+                <li><strong>O</strong>perable: User interface components and navigation must be operable.</li>
+                <li><strong>U</strong>nderstandable: Information and the operation of user interface must be understandable.</li>
+                <li><strong>R</strong>obust: Content must be robust enough to be interpreted by a wide variety of user agents, including assistive technologies.</li>
+            </ul>
+        </section>
+
+        <section class="slide">
+            <h2>1. Semantic HTML</h2>
+            <p>The foundation of accessibility. Use the right tag for the right job.</p>
+            <pre><code>
+<!-- Good: Screen readers know this is navigation -->
+&lt;nav&gt;
+  &lt;a href="/"&gt;Home&lt;/a&gt;
+&lt;/nav&gt;
+
+<!-- Bad: Just a generic container -->
+&lt;div&gt;
+  &lt;a href="/"&gt;Home&lt;/a&gt;
+&lt;/div&gt;
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>2. Keyboard Navigation</h2>
+            <p>All interactive elements must be reachable and usable with only a keyboard.</p>
+            <ul>
+                <li>Use `&lt;button&gt;` for actions, `&lt;a&gt;` for links.</li>
+                <li>Never remove the focus outline without a clear alternative.</li>
+            </ul>
+            <pre><code>
+/* Don't do this! */
+:focus {
+  outline: none;
+}
+
+/* Do this instead */
+:focus-visible {
+  outline: 3px solid blue;
+}
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>3. ARIA Attributes</h2>
+            <p>Accessible Rich Internet Applications. Use when HTML isn't enough.</p>
+            <pre><code>
+&lt;!-- Gives a button a descriptive name for screen readers --&gt;
+&lt;button aria-label="Close dialog"&gt;X&lt;/button&gt;
+
+&lt;!-- Tells screen readers to announce changes to this area --&gt;
+&lt;div id="status" aria-live="polite"&gt;&lt;/div&gt;
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>4. Color Contrast</h2>
+            <p>Text must have sufficient contrast with its background. (Ratio of at least <strong>4.5:1</strong>)</p>
+            <div style="display: flex; justify-content: space-around; width: 100%; margin-top: 20px;">
+                <div style="background: #fff; color: #757575; padding: 20px; border-radius: 8px; border: 1px solid #ccc;">
+                    <p>Good Contrast (4.53:1)</p>
+                </div>
+                <div style="background: #fff; color: #aaa; padding: 20px; border-radius: 8px; border: 1px solid #ccc;">
+                    <p style="color: #aaa;">Bad Contrast (2.23:1)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2>Key Takeaway</h2>
+            <p class="takeaway">Accessibility is not a feature, it's a fundamental requirement. Build with empathy.</p>
+        </section>
+
+        <section class="slide">
+            <h2>Next Up...</h2>
+            <h1>Git & GitHub for Beginners</h1>
+        </section>
+    </div>
+
+    <div class="controls">
+        <button id="prev">&larr; Prev</button>
+        <span id="slide-counter">1 / 8</span>
+        <button id="next">Next &rarr;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextButton = document.getElementById('next');
+            const prevButton = document.getElementById('prev');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+                slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+                prevButton.disabled = currentSlide === 0;
+                nextButton.disabled = currentSlide === slides.length - 1;
+            }
+
+            function showNextSlide() {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            }
+
+            function showPrevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+
+            nextButton.addEventListener('click', showNextSlide);
+            prevButton.addEventListener('click', showPrevSlide);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    showNextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevSlide();
+                }
+            });
+
+            updateSlides();
+        });
+    </script>
+</body>
+</html>

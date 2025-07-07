@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video 10 Slides: Frontend Architecture</title>
+    <link rel="stylesheet" href="slides.css">
+</head>
+<body>
+    <div id="presentation">
+        <section class="slide active">
+            <h1>Frontend Architecture & System Design</h1>
+            <p>Building to Scale</p>
+        </section>
+
+        <section class="slide">
+            <h2>The Challenge: State Management</h2>
+            <p>As apps grow, sharing data between many components becomes complex.</p>
+            <p>The naive approach, passing props down through many layers, is called <strong>"Prop Drilling"</strong> and is hard to maintain.</p>
+            <img src="https://i.imgur.com/A5Abv3j.png" alt="Prop Drilling Diagram" style="max-width: 60%; border-radius: 8px; margin-top: 20px;">
+        </section>
+
+        <section class="slide">
+            <h2>Solution: Centralized State Management</h2>
+            <p>Libraries like <strong>Redux</strong>, <strong>Zustand</strong> (for React), or <strong>Pinia</strong> (for Vue) provide a central "store".</p>
+            <ul>
+                <li>All shared application state lives in one place.</li>
+                <li>Components dispatch "actions" to update the state.</li>
+                <li>Components subscribe to changes and automatically re-render.</li>
+            </ul>
+        </section>
+
+        <section class="slide">
+            <h2>API Layer Design: REST vs. GraphQL</h2>
+            <p>How your frontend talks to your backend.</p>
+            <div style="display: flex; justify-content: space-around; width: 100%; margin-top: 20px; text-align: left;">
+                <div style="width: 45%;">
+                    <h3>REST</h3>
+                    <p>Multiple requests to different endpoints to gather all needed data. Can lead to over- or under-fetching.</p>
+                    <pre><code>
+GET /users/1
+GET /users/1/posts
+GET /users/1/comments
+                    </code></pre>
+                </div>
+                <div style="width: 45%;">
+                    <h3>GraphQL</h3>
+                    <p>A single, flexible query to get exactly the data you need in one request.</p>
+                    <pre><code>
+query {
+  user(id: 1) {
+    name
+    posts {
+      title
+      comments { body }
+    }
+  }
+}
+                    </code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2>Key Takeaway</h2>
+            <p class="takeaway">For large apps, use architectural patterns like centralized state management and choose an API strategy (like GraphQL) that fits your needs.</p>
+        </section>
+
+        <section class="slide">
+            <h2>Next Up...</h2>
+            <h1>Performance, Security, and Product Acumen</h1>
+        </section>
+    </div>
+
+    <div class="controls">
+        <button id="prev">&larr; Prev</button>
+        <span id="slide-counter">1 / 6</span>
+        <button id="next">Next &rarr;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextButton = document.getElementById('next');
+            const prevButton = document.getElementById('prev');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+                slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+                prevButton.disabled = currentSlide === 0;
+                nextButton.disabled = currentSlide === slides.length - 1;
+            }
+
+            function showNextSlide() {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            }
+
+            function showPrevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+
+            nextButton.addEventListener('click', showNextSlide);
+            prevButton.addEventListener('click', showPrevSlide);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    showNextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevSlide();
+                }
+            });
+
+            updateSlides();
+        });
+    </script>
+</body>
+</html>

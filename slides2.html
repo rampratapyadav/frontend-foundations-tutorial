@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video 2 Slides: Modern CSS</title>
+    <link rel="stylesheet" href="slides.css">
+</head>
+<body>
+    <div id="presentation">
+        <section class="slide active">
+            <h1>Modern CSS: Layout & Theming</h1>
+            <p>Video 2 Slides</p>
+        </section>
+
+        <section class="slide">
+            <h2>Today's Agenda</h2>
+            <ul>
+                <li>CSS Custom Properties (Variables) for Theming</li>
+                <li>Flexbox for 1D Layouts</li>
+                <li>CSS Grid for 2D Layouts</li>
+            </ul>
+        </section>
+
+        <section class="slide">
+            <h2>CSS Custom Properties</h2>
+            <p>Define reusable values for consistent and maintainable styles.</p>
+            <pre><code>
+:root {
+  --primary-color: #007bff;
+  --background-color: #ffffff;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+[data-theme="dark"] {
+  --primary-color: #bb86fc;
+  --background-color: #121212;
+}
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>Flexbox: 1D Layout</h2>
+            <p>For arranging items in a single row or column. Perfect for headers and navigation.</p>
+            <pre><code>
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>CSS Grid: 2D Layout</h2>
+            <p>For arranging items in both rows and columns. Perfect for page layouts and galleries.</p>
+            <pre><code>
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>Key Takeaway</h2>
+            <p class="takeaway">Use Flexbox for 1D layout and Grid for 2D layout. Use Custom Properties for theming.</p>
+        </section>
+
+        <section class="slide">
+            <h2>Next Up...</h2>
+            <h1>JavaScript Essentials: DOM & Events</h1>
+        </section>
+    </div>
+
+    <div class="controls">
+        <button id="prev">&larr; Prev</button>
+        <span id="slide-counter">1 / 7</span>
+        <button id="next">Next &rarr;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextButton = document.getElementById('next');
+            const prevButton = document.getElementById('prev');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+                slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+                prevButton.disabled = currentSlide === 0;
+                nextButton.disabled = currentSlide === slides.length - 1;
+            }
+
+            function showNextSlide() {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            }
+
+            function showPrevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+
+            nextButton.addEventListener('click', showNextSlide);
+            prevButton.addEventListener('click', showPrevSlide);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    showNextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevSlide();
+                }
+            });
+
+            updateSlides();
+        });
+    </script>
+</body>
+</html>

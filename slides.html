@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video 1 Slides: Intro to Semantic HTML</title>
+    <link rel="stylesheet" href="slides.css">
+</head>
+<body>
+    <div id="presentation">
+        <section class="slide active">
+            <h1>Frontend Foundations: Introduction & Semantic HTML</h1>
+            <p>Video 1 Slides</p>
+        </section>
+
+        <section class="slide">
+            <h2>What is Semantic HTML?</h2>
+            <p>Using HTML tags that describe the <strong>meaning</strong> and <strong>purpose</strong> of the content.</p>
+            <ul>
+                <li>Crucial for <strong>Accessibility (A11y)</strong>: Helps screen readers understand the page structure.</li>
+                <li>Crucial for <strong>SEO</strong>: Helps search engines understand your content.</li>
+            </ul>
+        </section>
+
+        <section class="slide">
+            <h2>Core Semantic Tags: Part 1</h2>
+            <pre><code>&lt;header&gt;</code></pre>
+            <p>Introductory content for a page or section (logos, title, navigation).</p>
+            <hr>
+            <pre><code>&lt;nav&gt;</code></pre>
+            <p>Specifically for main navigation links.</p>
+        </section>
+
+        <section class="slide">
+            <h2>Core Semantic Tags: Part 2</h2>
+            <pre><code>&lt;main&gt;</code></pre>
+            <p>The primary, unique content of the page. (Only one per page!)</p>
+            <hr>
+            <pre><code>&lt;section&gt;</code></pre>
+            <p>A thematic grouping of content, usually with a heading.</p>
+        </section>
+
+        <section class="slide">
+            <h2>Core Semantic Tags: Part 3</h2>
+            <pre><code>&lt;article&gt;</code></pre>
+            <p>Self-contained content that could stand on its own (e.g., a blog post, a project card).</p>
+            <hr>
+            <pre><code>&lt;footer&gt;</code></pre>
+            <p>Closing content for a page or section (copyright, contact info).</p>
+        </section>
+
+        <section class="slide">
+            <h2>Example: Portfolio Structure</h2>
+            <pre><code>
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;nav&gt;...&lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;section id="about"&gt;
+      &lt;h1&gt;About Me&lt;/h1&gt;
+    &lt;/section&gt;
+
+    &lt;section id="projects"&gt;
+      &lt;h2&gt;My Projects&lt;/h2&gt;
+      &lt;article&gt;...&lt;/article&gt;
+      &lt;article&gt;...&lt;/article&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;&copy; 2025 Your Name&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>Key Takeaway</h2>
+            <p class="takeaway">Always choose the HTML tag that best describes the <strong>meaning</strong> of the content.</p>
+        </section>
+
+        <section class="slide">
+            <h2>Next Up...</h2>
+            <h1>Modern CSS: Layout & Theming</h1>
+            <p>Flexbox, Grid, and CSS Custom Properties</p>
+        </section>
+    </div>
+
+    <div class="controls">
+        <button id="prev">&larr; Prev</button>
+        <span id="slide-counter">1 / 8</span>
+        <button id="next">Next &rarr;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextButton = document.getElementById('next');
+            const prevButton = document.getElementById('prev');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+                slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+                prevButton.disabled = currentSlide === 0;
+                nextButton.disabled = currentSlide === slides.length - 1;
+            }
+
+            function showNextSlide() {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            }
+
+            function showPrevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+
+            nextButton.addEventListener('click', showNextSlide);
+            prevButton.addEventListener('click', showPrevSlide);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    showNextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevSlide();
+                }
+            });
+
+            updateSlides();
+        });
+    </script>
+</body>
+</html>

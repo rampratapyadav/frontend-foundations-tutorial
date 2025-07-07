@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video 8 Slides: Prompt Engineering</title>
+    <link rel="stylesheet" href="slides.css">
+</head>
+<body>
+    <div id="presentation">
+        <section class="slide active">
+            <h1>Prompt Engineering for Code</h1>
+            <p>Getting What You Want from AI</p>
+        </section>
+
+        <section class="slide">
+            <h2>The Anatomy of a Perfect Prompt</h2>
+            <p>A great prompt is a detailed spec sheet for your AI assistant.</p>
+            <ol style="list-style-type: decimal; padding-left: 40px; font-size: 1.4rem; text-align: left;">
+                <li style="margin-bottom: 15px;"><strong>Role & Goal:</strong> Tell the AI who it is. ("You are an expert TypeScript developer...")</li>
+                <li style="margin-bottom: 15px;"><strong>Task & Action:</strong> State the specific task. ("Write a function that...")</li>
+                <li style="margin-bottom: 15px;"><strong>Context & Constraints:</strong> Provide tech stack, existing code, and limitations.</li>
+                <li style="margin-bottom: 15px;"><strong>Format & Structure:</strong> Specify the desired output format. ("Return only the code...")</li>
+                <li style="margin-bottom: 15px;"><strong>Examples:</strong> Provide clear input/output examples.</li>
+            </ol>
+        </section>
+
+        <section class="slide">
+            <h2>Example: From Bad to Great</h2>
+            <p>Task: Convert an array of objects to an object keyed by ID.</p>
+            <hr>
+            <p><strong>Bad Prompt:</strong> "write a function that converts an array to an object"</p>
+            <p><em>(Too vague, AI has to guess)</em></p>
+            <hr>
+            <p><strong>Great Prompt:</strong> "You are an expert TypeScript developer. Write a generic function `arrayToObject` that takes an array of objects and a key, and returns an object keyed by that property. Handle empty arrays. Provide an input/output example. Return only the function with JSDoc comments."</p>
+            <p><em>(Specific, contextual, and provides examples)</em></p>
+        </section>
+
+        <section class="slide">
+            <h2>A Great Prompt Example</h2>
+            <pre><code>
+You are an expert TypeScript developer.
+
+Task: Write a function named `arrayToObject`...
+
+Constraints: Must be generic, handle empty arrays, use no external libraries.
+
+Example:
+Input: `const users = [{ id: 'a', name: 'Alice' }];`
+Output: `{ 'a': { id: 'a', name: 'Alice' } }`
+
+Format: Provide only the TypeScript function, with JSDoc comments.
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>Key Takeaway</h2>
+            <p class="takeaway">The quality of your AI's output is a direct reflection of the quality of your prompt.</p>
+        </section>
+
+        <section class="slide">
+            <h2>Next Up...</h2>
+            <h1>Intro to a Core Framework (React & Vue)</h1>
+        </section>
+    </div>
+
+    <div class="controls">
+        <button id="prev">&larr; Prev</button>
+        <span id="slide-counter">1 / 6</span>
+        <button id="next">Next &rarr;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextButton = document.getElementById('next');
+            const prevButton = document.getElementById('prev');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+                slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+                prevButton.disabled = currentSlide === 0;
+                nextButton.disabled = currentSlide === slides.length - 1;
+            }
+
+            function showNextSlide() {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            }
+
+            function showPrevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+
+            nextButton.addEventListener('click', showNextSlide);
+            prevButton.addEventListener('click', showPrevSlide);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    showNextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevSlide();
+                }
+            });
+
+            updateSlides();
+        });
+    </script>
+</body>
+</html>

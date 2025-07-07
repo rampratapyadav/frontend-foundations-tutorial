@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video 3 Slides: JavaScript Essentials</title>
+    <link rel="stylesheet" href="slides.css">
+</head>
+<body>
+    <div id="presentation">
+        <section class="slide active">
+            <h1>JavaScript Essentials: DOM & Events</h1>
+            <p>Video 3 Slides</p>
+        </section>
+
+        <section class="slide">
+            <h2>What is the DOM?</h2>
+            <p>The <strong>D</strong>ocument <strong>O</strong>bject <strong>M</strong>odel is a tree-like structure of your HTML, created by the browser. JavaScript can access and manipulate this tree.</p>
+            <img src="https://i.imgur.com/3aGfT5s.png" alt="DOM Tree Diagram" style="max-width: 60%; border-radius: 8px; margin-top: 20px;">
+        </section>
+
+        <section class="slide">
+            <h2>1. Selecting Elements</h2>
+            <p>Before you can manipulate an element, you have to select it.</p>
+            <pre><code>
+// Get an element by its unique ID
+const themeSwitcher = document.getElementById('theme-switcher');
+
+// Get the first element that matches a CSS selector
+const container = document.querySelector('#projects-container');
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>2. Handling Events</h2>
+            <p>We use `addEventListener` to run a function when a user does something (like clicking).</p>
+            <pre><code>
+const button = document.getElementById('my-button');
+
+button.addEventListener('click', () => {
+  // This code runs when the button is clicked
+  console.log('Button was clicked!');
+});
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>3. Manipulating Elements</h2>
+            <p>Once selected, you can change an element's attributes, content, or style.</p>
+            <pre><code>
+// Change an attribute
+document.documentElement.setAttribute('data-theme', 'dark');
+
+// Change the text content
+status.textContent = 'Theme changed to dark.';
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>4. Creating & Adding Elements</h2>
+            <p>We can create new elements from scratch and add them to the page.</p>
+            <pre><code>
+// 1. Create a new element
+const card = document.createElement('article');
+
+// 2. Set its properties
+card.className = 'project-card';
+card.innerHTML = `&lt;h3&gt;New Project&lt;/h3&gt;`;
+
+// 3. Append it to a container on the page
+const container = document.getElementById('projects-container');
+container.appendChild(card);
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>Key Takeaway</h2>
+            <p class="takeaway">JavaScript brings pages to life by selecting elements, responding to events, and manipulating the DOM.</p>
+        </section>
+
+        <section class="slide">
+            <h2>Next Up...</h2>
+            <h1>Accessibility (A11y) Fundamentals</h1>
+        </section>
+    </div>
+
+    <div class="controls">
+        <button id="prev">&larr; Prev</button>
+        <span id="slide-counter">1 / 8</span>
+        <button id="next">Next &rarr;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextButton = document.getElementById('next');
+            const prevButton = document.getElementById('prev');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+                slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+                prevButton.disabled = currentSlide === 0;
+                nextButton.disabled = currentSlide === slides.length - 1;
+            }
+
+            function showNextSlide() {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            }
+
+            function showPrevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+
+            nextButton.addEventListener('click', showNextSlide);
+            prevButton.addEventListener('click', showPrevSlide);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    showNextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevSlide();
+                }
+            });
+
+            updateSlides();
+        });
+    </script>
+</body>
+</html>

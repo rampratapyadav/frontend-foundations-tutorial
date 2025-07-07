@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video 6 Slides: Intro to TypeScript</title>
+    <link rel="stylesheet" href="slides.css">
+</head>
+<body>
+    <div id="presentation">
+        <section class="slide active">
+            <h1>Introduction to TypeScript</h1>
+            <p>Supercharging Your JavaScript</p>
+        </section>
+
+        <section class="slide">
+            <h2>What is TypeScript?</h2>
+            <p>TypeScript is a "superset" of JavaScript. It's just JavaScript + a static type system.</p>
+            <p>Its goal is to catch errors <strong>before</strong> you run your code.</p>
+        </section>
+
+        <section class="slide">
+            <h2>The Problem with JavaScript</h2>
+            <p>JavaScript is dynamically typed. You don't know about type errors until you run the code.</p>
+            <pre><code>
+function calculateTotal(item) {
+  return item.price * item.quantity;
+}
+
+// This will result in NaN (Not a Number)
+// You won't know until this code runs in the browser!
+calculateTotal({ cost: 10, amount: 2 });
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>The TypeScript Solution: Interfaces</h2>
+            <p>We can define the "shape" of our data with an `interface`.</p>
+            <pre><code>
+interface Item {
+  price: number;
+  quantity: number;
+}
+
+function calculateTotal(item: Item): number {
+  return item.price * item.quantity;
+}
+
+// Now, TypeScript gives an error right in your editor!
+// ❌ Error: Property 'price' is missing.
+calculateTotal({ cost: 10, amount: 2 });
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>The Compilation Step</h2>
+            <p>Browsers don't run TypeScript. You must compile it to JavaScript first.</p>
+            <div style="text-align: left; font-size: 1.3rem; margin-top: 20px;">
+                <p>1. You write code in <strong>app.ts</strong></p>
+                <p>2. You run the compiler: <strong>`npm run build`</strong> (which runs `tsc`)</p>
+                <p>3. The compiler checks for errors.</p>
+                <p>4. It creates a new file: <strong>dist/app.js</strong></p>
+                <p>5. Your HTML loads the compiled JavaScript: `&lt;script src="dist/app.js"&gt;&lt;/script&gt;`</p>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2>Key Takeaway</h2>
+            <p class="takeaway">TypeScript helps you catch bugs before they happen by adding static types to JavaScript.</p>
+        </section>
+
+        <section class="slide">
+            <h2>Next Up...</h2>
+            <h1>Integrating AI into Your Workflow</h1>
+        </section>
+    </div>
+
+    <div class="controls">
+        <button id="prev">&larr; Prev</button>
+        <span id="slide-counter">1 / 7</span>
+        <button id="next">Next &rarr;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextButton = document.getElementById('next');
+            const prevButton = document.getElementById('prev');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+                slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+                prevButton.disabled = currentSlide === 0;
+                nextButton.disabled = currentSlide === slides.length - 1;
+            }
+
+            function showNextSlide() {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            }
+
+            function showPrevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+
+            nextButton.addEventListener('click', showNextSlide);
+            prevButton.addEventListener('click', showPrevSlide);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    showNextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevSlide();
+                }
+            });
+
+            updateSlides();
+        });
+    </script>
+</body>
+</html>

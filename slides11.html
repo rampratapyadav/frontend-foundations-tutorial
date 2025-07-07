@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video 11 Slides: Performance, Security, & Product Acumen</title>
+    <link rel="stylesheet" href="slides.css">
+</head>
+<body>
+    <div id="presentation">
+        <section class="slide active">
+            <h1>Performance, Security, & Product Acumen</h1>
+            <p>The Senior Developer Mindset</p>
+        </section>
+
+        <section class="slide">
+            <h2>1. Web Performance</h2>
+            <p>Making your site <strong>fast</strong> is crucial for user experience and SEO.</p>
+            <p>Focus on the <strong>Core Web Vitals</strong>:</p>
+            <ul>
+                <li><strong>Largest Contentful Paint (LCP):</strong> Loading performance. (Goal: < 2.5s)</li>
+                <li><strong>Interaction to Next Paint (INP):</strong> Interactivity.</li>
+                <li><strong>Cumulative Layout Shift (CLS):</strong> Visual stability. (Goal: < 0.1)</li>
+            </ul>
+        </section>
+
+        <section class="slide">
+            <h2>Performance Techniques</h2>
+            <ul>
+                <li><strong>Image Optimization:</strong> Compress images and use modern formats like WebP.</li>
+                <li><strong>Lazy Loading:</strong> Use `loading="lazy"` on images to defer loading of off-screen images.</li>
+                <li><strong>Code Minification:</strong> Remove unnecessary characters from code.</li>
+                <li><strong>Caching:</strong> Use browser and CDN caching to store assets closer to the user.</li>
+            </ul>
+        </section>
+
+        <section class="slide">
+            <h2>2. Web Security</h2>
+            <p>Making your site <strong>safe</strong> protects your users and your business.</p>
+            <ul>
+                <li><strong>Always use HTTPS:</strong> Encrypts data between the user and the server.</li>
+                <li><strong>Prevent Cross-Site Scripting (XSS):</strong> Never trust user input. Sanitize all user-generated content before rendering it. Modern frameworks help with this automatically.</li>
+            </ul>
+        </section>
+
+        <section class="slide">
+            <h2>3. Product Acumen</h2>
+            <p>Understanding the <strong>"why"</strong> behind what you build.</p>
+            <p>Move from asking "Can I build this?" to "<strong>Should</strong> we build this?"</p>
+            <ul>
+                <li>Who are the users?</li>
+                <li>What problem are we solving?</li>
+                <li>What is the business goal?</li>
+            </ul>
+        </section>
+
+        <section class="slide">
+            <h2>Key Takeaway</h2>
+            <p class="takeaway">A senior developer delivers work that is not just functional, but also fast, safe, and valuable to the user and the business.</p>
+        </section>
+
+        <section class="slide">
+            <h2>Next Up...</h2>
+            <h1>Your Evolving Role & The T-Shaped Developer</h1>
+        </section>
+    </div>
+
+    <div class="controls">
+        <button id="prev">&larr; Prev</button>
+        <span id="slide-counter">1 / 7</span>
+        <button id="next">Next &rarr;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextButton = document.getElementById('next');
+            const prevButton = document.getElementById('prev');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+                slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+                prevButton.disabled = currentSlide === 0;
+                nextButton.disabled = currentSlide === slides.length - 1;
+            }
+
+            function showNextSlide() {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            }
+
+            function showPrevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+
+            nextButton.addEventListener('click', showNextSlide);
+            prevButton.addEventListener('click', showPrevSlide);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    showNextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevSlide();
+                }
+            });
+
+            updateSlides();
+        });
+    </script>
+</body>
+</html>

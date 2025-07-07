@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video 9 Slides: Intro to Frameworks</title>
+    <link rel="stylesheet" href="slides.css">
+</head>
+<body>
+    <div id="presentation">
+        <section class="slide active">
+            <h1>Intro to a Core Framework</h1>
+            <p>Building with React & Vue</p>
+        </section>
+
+        <section class="slide">
+            <h2>The Core Idea: Components</h2>
+            <p>Both React and Vue are built around <strong>Component-Based Architecture</strong>.</p>
+            <p>Break down your UI into small, reusable, self-contained pieces.</p>
+            <img src="https://i.imgur.com/U3s1VqG.png" alt="Component Tree Diagram" style="max-width: 70%; border-radius: 8px; margin-top: 20px;">
+        </section>
+
+        <section class="slide">
+            <h2>React: Core Concepts</h2>
+            <ul>
+                <li><strong>JSX:</strong> HTML-like syntax inside JavaScript.</li>
+                <li><strong>Components:</strong> JavaScript functions that return JSX.</li>
+                <li><strong>Props:</strong> How data is passed down to components (read-only).</li>
+                <li><strong>State:</strong> A component's internal, changeable data (`useState` hook).</li>
+            </ul>
+        </section>
+
+        <section class="slide">
+            <h2>React Counter Example</h2>
+            <pre><code>
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;You clicked {count} times&lt;/p&gt;
+      &lt;button onClick={() => setCount(count + 1)}&gt;
+        Click me
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>Vue.js: Core Concepts</h2>
+            <ul>
+                <li><strong>Single-File Components:</strong> Template, script, and style in one `.vue` file.</li>
+                <li><strong>Template Syntax:</strong> Extends HTML with directives (`v-on`, `v-for`, etc.).</li>
+                <li><strong>Reactivity:</strong> The `data()` function holds the component's state. When it changes, the template automatically updates.</li>
+            </ul>
+        </section>
+
+        <section class="slide">
+            <h2>Vue Counter Example</h2>
+            <pre><code>
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;p&gt;You clicked {{ count }} times&lt;/p&gt;
+    &lt;button @click="increment"&gt;Click me&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return { count: 0 };
+  },
+  methods: {
+    increment() {
+      this.count++;
+    }
+  }
+}
+&lt;/script&gt;
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>Key Takeaway</h2>
+            <p class="takeaway">Frameworks help you build large, scalable applications using a component-based approach.</p>
+        </section>
+
+        <section class="slide">
+            <h2>Next Up...</h2>
+            <h1>Frontend Architecture & System Design</h1>
+        </section>
+    </div>
+
+    <div class="controls">
+        <button id="prev">&larr; Prev</button>
+        <span id="slide-counter">1 / 8</span>
+        <button id="next">Next &rarr;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextButton = document.getElementById('next');
+            const prevButton = document.getElementById('prev');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+                slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+                prevButton.disabled = currentSlide === 0;
+                nextButton.disabled = currentSlide === slides.length - 1;
+            }
+
+            function showNextSlide() {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            }
+
+            function showPrevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+
+            nextButton.addEventListener('click', showNextSlide);
+            prevButton.addEventListener('click', showPrevSlide);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    showNextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevSlide();
+                }
+            });
+
+            updateSlides();
+        });
+    </script>
+</body>
+</html>

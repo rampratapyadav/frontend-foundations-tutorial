@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video 5 Slides: Git & GitHub</title>
+    <link rel="stylesheet" href="slides.css">
+</head>
+<body>
+    <div id="presentation">
+        <section class="slide active">
+            <h1>Git & GitHub for Beginners</h1>
+            <p>Your Safety Net and Collaboration Hub</p>
+        </section>
+
+        <section class="slide">
+            <h2>Git vs. GitHub</h2>
+            <ul>
+                <li><strong>Git:</strong> A version control system on your <strong>local machine</strong>. It tracks changes and creates snapshots of your code.</li>
+                <li><strong>GitHub:</strong> A <strong>web-based platform</strong> that hosts your Git repositories. It's for remote storage, collaboration, and project management.</li>
+            </ul>
+        </section>
+
+        <section class="slide">
+            <h2>The 3-Stage Local Workflow</h2>
+            <p>How changes are saved on your machine.</p>
+            <ol style="list-style-type: decimal; padding-left: 40px; font-size: 1.4rem; text-align: left;">
+                <li style="margin-bottom: 15px;"><strong>Working Directory:</strong> The files you are currently editing.</li>
+                <li style="margin-bottom: 15px;"><strong>Staging Area:</strong> Where you place the changes you want to include in your next snapshot.</li>
+                <li style="margin-bottom: 15px;"><strong>Local Repository:</strong> Where Git permanently stores your snapshots (commits).</li>
+            </ol>
+        </section>
+
+        <section class="slide">
+            <h2>Command 1: `git add`</h2>
+            <p>Moves changes from the Working Directory to the Staging Area.</p>
+            <pre><code>
+# Stage a single file
+$ git add index.html
+
+# Stage all changes in the current directory
+$ git add .
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>Command 2: `git commit`</h2>
+            <p>Takes everything from the Staging Area and creates a permanent snapshot in your Local Repository.</p>
+            <pre><code>
+$ git commit -m "feat: Add dark mode toggle button"
+            </code></pre>
+            <p><em>Always write a clear, descriptive commit message!</em></p>
+        </section>
+
+        <section class="slide">
+            <h2>The Remote Workflow</h2>
+            <p>Syncing your local repository with a remote one (GitHub).</p>
+            <ul>
+                <li><strong>`git push`</strong>: Sends your local commits to the remote repository.</li>
+                <li><strong>`git pull`</strong>: Fetches changes from the remote repository and merges them into your local repository.</li>
+            </ul>
+        </section>
+
+        <section class="slide">
+            <h2>The Essential Daily Workflow</h2>
+            <pre><code>
+# 1. Get the latest changes from the remote
+$ git pull
+
+# 2. Make your changes to the code...
+
+# 3. Stage your changes
+$ git add .
+
+# 4. Commit your changes
+$ git commit -m "Your descriptive message"
+
+# 5. Push your changes to the remote
+$ git push
+            </code></pre>
+        </section>
+
+        <section class="slide">
+            <h2>Key Takeaway</h2>
+            <p class="takeaway">`add` -> `commit` -> `push`. This is the core loop for saving and sharing your work.</p>
+        </section>
+
+        <section class="slide">
+            <h2>Next Up...</h2>
+            <h1>Introduction to TypeScript</h1>
+        </section>
+    </div>
+
+    <div class="controls">
+        <button id="prev">&larr; Prev</button>
+        <span id="slide-counter">1 / 9</span>
+        <button id="next">Next &rarr;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextButton = document.getElementById('next');
+            const prevButton = document.getElementById('prev');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+                slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+                prevButton.disabled = currentSlide === 0;
+                nextButton.disabled = currentSlide === slides.length - 1;
+            }
+
+            function showNextSlide() {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            }
+
+            function showPrevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+
+            nextButton.addEventListener('click', showNextSlide);
+            prevButton.addEventListener('click', showPrevSlide);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    showNextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevSlide();
+                }
+            });
+
+            updateSlides();
+        });
+    </script>
+</body>
+</html>
